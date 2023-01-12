@@ -1,6 +1,9 @@
-<h1 align="center"> Prancha de Acessibilidade </h1>
+<h1 align="center" font-weight: bold> Aplicativo TTS </h1>
 
 
-Prancha de acessibilidade desenvolvida para o NAPNE.
+Aplicativo Text To Speech desenvolvido para o NAPNE. Este aplicativo converte o texto escrito em fala.
+
+
+<h3> Plataformas: Android, iOS, Windows e Linux </h1>
 
 
