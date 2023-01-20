@@ -44,29 +44,61 @@ class _MyHomePageState extends State<MyHomePage> {
   double speechRate = 0.5;
   List<String>? languages;
   String langCode = "pt-BR";
-  String nomeVoz = "Daniel";
-  List<String>? vozes = ['Daniel', 'Maria'];
+  String nomeVoz = "";
+  List<String>? vozes = [];
   double tamanhoFonte = 17.0;
   int corFonte = 0; //Preto
   int corFundo = 0; //Branco
-  //LEITOR DE PDF
-  PDFDoc? _pdfDoc;
-  String _text = "";
-  bool _buttonsEnabled = true;
 
-  List<String>? tts;
+  //LEITOR DE PDF
+  String _text = "";
+
+  late List<Object?> tts;
+  String teste = "";
+  String jsonUser = "";
+  String name = "";
+  String local = "pt-BR";
+
+  List<String> nomes = ["Microsoft Maria - Portuguese (Brazil)", "Microsoft Daniel - Portuguese (Brazil)"];
+
+  String aux="";
+  Map<String, String> vozz = {};
+  Map<String, String> voz = {"name": "Microsoft Maria - Portuguese (Brazil)", "locale": "pt-BR"};
+  List<String> opcoesVoz = ["name: Microsoft Daniel - Portuguese (Brazil), locale: pt-BR", "name: Microsoft Maria - Portuguese (Brazil), locale: pt-BR"];
 
   @override
   void initState() {
     super.initState();
     init();
+    setState(() {
+    });
   }
 
   void init() async {
     languages = List<String>.from(await flutterTts.getLanguages);
-    // tts = List<String>.from(await flutterTts.getVoices);
+    tts = (await flutterTts.getVoices);
     // print(tts);
-    setState(() {});
+    jsonUser = jsonEncode(tts);
+    // print(jsonUser);
+    setState(() {
+    });
+  }
+
+
+  trocaVoz(String nome) async {
+    setState(() {
+      final Map<String, String> data = new Map<String, String>();
+      data['name'] = nome;
+      data['locale'] = local;
+      // print(data);
+      aux = jsonEncode(data);
+      //print(aux);
+      var dataAux = aux.split(',');
+      Map <String, String> mapData = {};
+      dataAux.forEach((element) => mapData[element.split(':')[0]] = element.split(':')[1]);
+      print(mapData);
+      //flutterTts.setVoice(mapData);
+    });
   }
 
   @override
@@ -103,51 +135,9 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Center(
                 child: Column(children: [
 
-                  // Row(
-                  //   //mainAxisSize: MainAxisSize.min,
-                  //   children: [
-                  //
-                  //     SizedBox(
-                  //       height: MediaQuery.of(context).size.height *.05,
-                  //     ),
-                  //
-                  //     SizedBox(
-                  //       width: MediaQuery.of(context).size.width *.01,
-                  //     ),
-                  //
-                  //     ElevatedButton(
-                  //       style: ElevatedButton.styleFrom(
-                  //           primary: Colors.green,
-                  //           textStyle: TextStyle(fontSize: tamanhoFonte)
-                  //       ),
-                  //       onPressed: () {
-                  //         Navigator.push(
-                  //           context,
-                  //           MaterialPageRoute(builder: (context) => Leitor()),
-                  //         );
-                  //       },
-                  //       child: const Text("Leitor de PDF"),
-                  //     ),
-                  //
-                  //     SizedBox(
-                  //       width: MediaQuery.of(context).size.width *.01,
-                  //     ),
-                  //
-                  //     ElevatedButton(
-                  //       style: ElevatedButton.styleFrom(
-                  //           primary: Colors.green,
-                  //           textStyle: TextStyle(fontSize: tamanhoFonte)
-                  //       ),
-                  //       onPressed: _fonteOriginal,
-                  //       child: const Text("Salvar Texto"),
-                  //     ),
-                  //   ],
-                  // ),
-
                   SizedBox(
                     height: MediaQuery.of(context).size.height *.05,
                   ),
-
 
                   Row(
                     mainAxisSize: MainAxisSize.min,
@@ -383,48 +373,48 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
 
-                  Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.height *.02),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Vozzzzz :",
-                              style: TextStyle(fontSize: tamanhoFonte, color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.height *.05,
-                            ),
-                            DropdownButton<String>(
-                              dropdownColor: corFundo == 1 ? Colors.black : corFundo == 0 ? Colors.white : Colors.black,
-                              focusColor: corFundo == 1 ? Colors.black : corFundo == 0 ? Colors.white : Colors.black,
-                              value: nomeVoz,
-                              style: TextStyle(
-                                  color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black
-                              ),
-                              iconEnabledColor: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black,
-                              items: vozes!
-                                  .map<DropdownMenuItem<String>>((String? value) {
-                                return DropdownMenuItem<String>(
-                                  value: value!,
-                                  child: Text(
-                                    value,
-                                    style: TextStyle(color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black),
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  nomeVoz = value!;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Container(
+                  //       margin: EdgeInsets.only(left: MediaQuery.of(context).size.height *.02),
+                  //       child: Row(
+                  //         children: [
+                  //           Text(
+                  //             "Vozzzzz :",
+                  //             style: TextStyle(fontSize: tamanhoFonte, color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black),
+                  //           ),
+                  //           SizedBox(
+                  //             width: MediaQuery.of(context).size.height *.05,
+                  //           ),
+                  //           DropdownButton<Object>(
+                  //             dropdownColor: corFundo == 1 ? Colors.black : corFundo == 0 ? Colors.white : Colors.black,
+                  //             focusColor: corFundo == 1 ? Colors.black : corFundo == 0 ? Colors.white : Colors.black,
+                  //             value: nomeVoz2,
+                  //             style: TextStyle(
+                  //                 color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black
+                  //             ),
+                  //             iconEnabledColor: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black,
+                  //             items: tts
+                  //                 .map<DropdownMenuItem<Object>>((Object? value) {
+                  //               return DropdownMenuItem<Object>(
+                  //                 value: value!,
+                  //                 child: Text(
+                  //                   value.toString(),
+                  //                   style: TextStyle(color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black),
+                  //                 ),
+                  //               );
+                  //             }).toList(),
+                  //             onChanged: (Object? value) {
+                  //               setState(() {
+                  //                 nomeVoz2 = value!;
+                  //               });
+                  //             },
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
 
 
 
@@ -487,12 +477,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                         DropdownButton<String>(
                                           dropdownColor: corFundo == 1 ? Colors.black : corFundo == 0 ? Colors.white : Colors.black,
                                           focusColor: corFundo == 1 ? Colors.black : corFundo == 0 ? Colors.white : Colors.black,
-                                          value: nomeVoz,
                                           style: TextStyle(
                                               color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black
                                           ),
                                           iconEnabledColor: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black,
-                                          items: vozes!
+                                          items: nomes!
                                               .map<DropdownMenuItem<String>>((String? value) {
                                             return DropdownMenuItem<String>(
                                               value: value!,
@@ -504,7 +493,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                           }).toList(),
                                           onChanged: (String? value) {
                                             setState(() {
-                                              nomeVoz = value!;
+                                              name = value!;
+                                              trocaVoz(name);
                                             });
                                           },
                                         ),
@@ -517,7 +507,6 @@ class _MyHomePageState extends State<MyHomePage> {
                               SizedBox(
                                 width: MediaQuery.of(context).size.width *.3,
                               ),
-
                             ],
                           ),
                         ),
@@ -531,12 +520,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void initSetting() async {
+    // await flutterTts.getDefaultVoice;
+    // await flutterTts.setVoice({"name": "Microsoft Daniel - Portuguese (Brazil)", "locale": "pt-BR"});
     await flutterTts.setVolume(volume);
     await flutterTts.setPitch(pitch);
     await flutterTts.setSpeechRate(speechRate);
     await flutterTts.setLanguage(langCode);
-    await flutterTts.setVoice({'name': 'Microsoft Daniel - Portuguese (Brazil)', 'locale': 'pt-BR', 'name': 'Microsoft Maria - Portuguese (Brazil)', 'locale': 'pt-BR'});
-    // List tts = await flutterTts.getVoices;
+    //List tts = await flutterTts.getVoices;
     // print (tts);
   }
 
