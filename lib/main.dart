@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double speechRate = 0.5;
   List<String>? languages;
   String langCode = "pt-BR";
-  String nomeVoz = "";
+  String nomeVoz = "Maria";
   List<String>? vozes = [];
   double tamanhoFonte = 17.0;
   int corFonte = 0; //Preto
@@ -56,22 +56,30 @@ class _MyHomePageState extends State<MyHomePage> {
   late List<Object?> tts;
   String teste = "";
   String jsonUser = "";
-  String name = "";
+  String name = "Microsoft Daniel - Portuguese (Brazil)";
   String local = "pt-BR";
 
-  List<String> nomes = ["Microsoft Maria - Portuguese (Brazil)", "Microsoft Daniel - Portuguese (Brazil)"];
+  List<String> nomes = [
+    "Microsoft Maria - Portuguese (Brazil)",
+    "Microsoft Daniel - Portuguese (Brazil)"
+  ];
 
-  String aux="";
+  String aux = "";
   Map<String, String> vozz = {};
-  Map<String, String> voz = {"name": "Microsoft Maria - Portuguese (Brazil)", "locale": "pt-BR"};
-  List<String> opcoesVoz = ["name: Microsoft Daniel - Portuguese (Brazil), locale: pt-BR", "name: Microsoft Maria - Portuguese (Brazil), locale: pt-BR"];
+  Map<String, String> voz = {
+    "name": "Microsoft Maria - Portuguese (Brazil)",
+    "locale": "pt-BR"
+  };
+  List<String> opcoesVoz = [
+    "name: Microsoft Daniel - Portuguese (Brazil), locale: pt-BR",
+    "name: Microsoft Maria - Portuguese (Brazil), locale: pt-BR"
+  ];
 
   @override
   void initState() {
     super.initState();
     init();
-    setState(() {
-    });
+    setState(() {});
   }
 
   void init() async {
@@ -80,46 +88,41 @@ class _MyHomePageState extends State<MyHomePage> {
     // print(tts);
     jsonUser = jsonEncode(tts);
     // print(jsonUser);
-    setState(() {
-    });
+    setState(() {});
   }
-
 
   trocaVoz(String nome) async {
     setState(() {
       final Map<String, String> data = new Map<String, String>();
       data['name'] = nome;
       data['locale'] = local;
-      // print(data);
-      aux = jsonEncode(data);
-      //print(aux);
-      var dataAux = aux.split(',');
-      Map <String, String> mapData = {};
-      dataAux.forEach((element) => mapData[element.split(':')[0]] = element.split(':')[1]);
-      print(mapData);
-      //flutterTts.setVoice(mapData);
+      flutterTts.setVoice(data);
     });
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return RawKeyboardListener(
       autofocus: true,
       focusNode: FocusNode(),
-      onKey: (event){
-        if (event.isKeyPressed(LogicalKeyboardKey.f5)){    //Tecla F5 para falar
+      onKey: (event) {
+        if (event.isKeyPressed(LogicalKeyboardKey.f5)) {
+          //Tecla F5 para falar
           _speak();
         }
 
-        if (event.isKeyPressed(LogicalKeyboardKey.f6)){    //Tecla F5 para parar de falar
+        if (event.isKeyPressed(LogicalKeyboardKey.f6)) {
+          //Tecla F5 para parar de falar
           _speak();
         }
 
-        if (event.isKeyPressed(LogicalKeyboardKey.altRight)){   //Aumentar fonte
+        if (event.isKeyPressed(LogicalKeyboardKey.altRight)) {
+          //Aumentar fonte
           _aumentarFonte();
         }
 
-        if (event.isKeyPressed(LogicalKeyboardKey.altLeft)){   //Diminuir fonte
+        if (event.isKeyPressed(LogicalKeyboardKey.altLeft)) {
+          //Diminuir fonte
           _fonteOriginal();
         }
       },
@@ -128,48 +131,63 @@ class _MyHomePageState extends State<MyHomePage> {
           //   centerTitle: true,
           //   title: const Text("Text To Speech"),
           // ),
-        backgroundColor: corFundo == 0 ? Colors.white : corFundo == 1 ? Colors.black : Colors.white,
+          backgroundColor: corFundo == 0
+              ? Colors.white
+              : corFundo == 1
+                  ? Colors.black
+                  : Colors.white,
           body: SingleChildScrollView(
             child: Container(
               margin: const EdgeInsets.only(top: 20),
               child: Center(
                 child: Column(children: [
-
                   SizedBox(
-                    height: MediaQuery.of(context).size.height *.05,
+                    height: MediaQuery.of(context).size.height * .05,
                   ),
 
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-
                       SizedBox(
-                        width: MediaQuery.of(context).size.width *.8,
-                        height: MediaQuery.of(context).size.height *.2,
+                        width: MediaQuery.of(context).size.width * .8,
+                        height: MediaQuery.of(context).size.height * .2,
                         //width: 500,
                         //height: 60,
                         child: TextField(
-                          style: TextStyle(fontSize: tamanhoFonte, color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black ),
+                          style: TextStyle(
+                              fontSize: tamanhoFonte,
+                              color: corFundo == 0
+                                  ? Colors.black
+                                  : corFundo == 1
+                                      ? Colors.white
+                                      : Colors.black),
                           maxLines: 10,
                           controller: controller,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black
-                              ),
+                              borderSide: BorderSide(
+                                  color: corFundo == 0
+                                      ? Colors.black
+                                      : corFundo == 1
+                                          ? Colors.white
+                                          : Colors.black),
                             ),
                             hintText: 'Digite o texto',
-                            hintStyle: TextStyle(color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black),
+                            hintStyle: TextStyle(
+                                color: corFundo == 0
+                                    ? Colors.black
+                                    : corFundo == 1
+                                        ? Colors.white
+                                        : Colors.black),
                           ),
                         ),
                       ),
-
                       Text(_text),
-
                     ],
                   ),
 
                   SizedBox(
-                    height: MediaQuery.of(context).size.height *.05,
+                    height: MediaQuery.of(context).size.height * .05,
                   ),
 
                   Row(
@@ -178,41 +196,43 @@ class _MyHomePageState extends State<MyHomePage> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.green,
-                            textStyle: TextStyle(fontSize: tamanhoFonte)
-                        ),
+                            textStyle: TextStyle(fontSize: tamanhoFonte)),
                         onPressed: _speak,
                         child: const Text("Falar"),
                       ),
-
                       SizedBox(
-                        width: MediaQuery.of(context).size.width *.01,
+                        width: MediaQuery.of(context).size.width * .01,
                       ),
-
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.green,
-                            textStyle: TextStyle(fontSize: tamanhoFonte)
-                        ),
+                            textStyle: TextStyle(fontSize: tamanhoFonte)),
                         onPressed: _stop,
                         child: const Text("Parar"),
                       ),
-
                     ],
                   ),
 
                   SizedBox(
-                    height: MediaQuery.of(context).size.height *.04,
+                    height: MediaQuery.of(context).size.height * .04,
                   ),
 
                   Container(
-                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.height *.02),
+                    margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.height * .02),
                     child: Row(
                       children: [
-                         SizedBox(
-                          width: MediaQuery.of(context).size.width *.08,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * .08,
                           child: Text(
                             "Volume",
-                            style: TextStyle(fontSize: tamanhoFonte, color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black),
+                            style: TextStyle(
+                                fontSize: tamanhoFonte,
+                                color: corFundo == 0
+                                    ? Colors.black
+                                    : corFundo == 1
+                                        ? Colors.white
+                                        : Colors.black),
                           ),
                         ),
                         Slider(
@@ -227,9 +247,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.height *.01),
+                          margin: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.height * .01),
                           child: Text(
-                              double.parse((volume).toStringAsFixed(2)).toString(),
+                              double.parse((volume).toStringAsFixed(2))
+                                  .toString(),
                               style: TextStyle(fontSize: tamanhoFonte)),
                         )
                       ],
@@ -237,18 +259,25 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
 
                   SizedBox(
-                    height: MediaQuery.of(context).size.height *.05,
+                    height: MediaQuery.of(context).size.height * .05,
                   ),
 
                   Container(
-                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.height *.02),
+                    margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.height * .02),
                     child: Row(
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width *.08,
+                          width: MediaQuery.of(context).size.width * .08,
                           child: Text(
                             "Tonalidade",
-                            style: TextStyle(fontSize: tamanhoFonte, color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black),
+                            style: TextStyle(
+                                fontSize: tamanhoFonte,
+                                color: corFundo == 0
+                                    ? Colors.black
+                                    : corFundo == 1
+                                        ? Colors.white
+                                        : Colors.black),
                           ),
                         ),
                         Slider(
@@ -263,9 +292,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.height *.01),
+                          margin: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.height * .01),
                           child: Text(
-                              double.parse((pitch).toStringAsFixed(2)).toString(),
+                              double.parse((pitch).toStringAsFixed(2))
+                                  .toString(),
                               style: TextStyle(fontSize: tamanhoFonte)),
                         )
                       ],
@@ -273,19 +304,25 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
 
                   SizedBox(
-                    height: MediaQuery.of(context).size.height *.05,
+                    height: MediaQuery.of(context).size.height * .05,
                   ),
 
-
                   Container(
-                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.height *.02),
+                    margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.height * .02),
                     child: Row(
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width *.08,
+                          width: MediaQuery.of(context).size.width * .08,
                           child: Text(
                             "Velocidade",
-                            style: TextStyle(fontSize: tamanhoFonte, color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black),
+                            style: TextStyle(
+                                fontSize: tamanhoFonte,
+                                color: corFundo == 0
+                                    ? Colors.black
+                                    : corFundo == 1
+                                        ? Colors.white
+                                        : Colors.black),
                           ),
                         ),
                         Slider(
@@ -299,9 +336,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             });
                           },
                         ),
-
                         Container(
-                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.height *.02),
+                          margin: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.height * .02),
                           child: Text(
                               double.parse((speechRate).toStringAsFixed(2))
                                   .toString(),
@@ -312,7 +349,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
 
                   SizedBox(
-                    height: MediaQuery.of(context).size.height *.04,
+                    height: MediaQuery.of(context).size.height * .04,
                   ),
 
                   Row(
@@ -321,21 +358,17 @@ class _MyHomePageState extends State<MyHomePage> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.green,
-                            textStyle: TextStyle(fontSize: tamanhoFonte)
-                        ),
+                            textStyle: TextStyle(fontSize: tamanhoFonte)),
                         onPressed: _aumentarFonte,
                         child: const Text("Aumentar Fonte "),
                       ),
-
                       SizedBox(
-                        width: MediaQuery.of(context).size.width *.01,
+                        width: MediaQuery.of(context).size.width * .01,
                       ),
-
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.green,
-                            textStyle: TextStyle(fontSize: tamanhoFonte)
-                        ),
+                            textStyle: TextStyle(fontSize: tamanhoFonte)),
                         onPressed: _fonteOriginal,
                         child: const Text("Tamanho Original"),
                       ),
@@ -343,7 +376,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
 
                   SizedBox(
-                    height: MediaQuery.of(context).size.height *.04,
+                    height: MediaQuery.of(context).size.height * .04,
                   ),
 
                   Row(
@@ -352,21 +385,17 @@ class _MyHomePageState extends State<MyHomePage> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.green,
-                            textStyle: TextStyle(fontSize: tamanhoFonte)
-                        ),
+                            textStyle: TextStyle(fontSize: tamanhoFonte)),
                         onPressed: _altoContraste,
                         child: const Text("Alto Contraste"),
                       ),
-
                       SizedBox(
-                        width: MediaQuery.of(context).size.width *.01,
+                        width: MediaQuery.of(context).size.width * .01,
                       ),
-
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.green,
-                            textStyle: TextStyle(fontSize: tamanhoFonte)
-                        ),
+                            textStyle: TextStyle(fontSize: tamanhoFonte)),
                         onPressed: _contrasteOriginal,
                         child: const Text("Constraste Original"),
                       ),
@@ -416,37 +445,62 @@ class _MyHomePageState extends State<MyHomePage> {
                   //   ],
                   // ),
 
-
-
-
-
                   if (languages != null)
                     Row(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.height *.02),
+                          margin: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.height * .02),
                           child: Row(
                             children: [
                               Text(
                                 "Idioma :",
-                                style: TextStyle(fontSize: tamanhoFonte, color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black),
+                                style: TextStyle(
+                                    fontSize: tamanhoFonte,
+                                    color: corFundo == 0
+                                        ? Colors.black
+                                        : corFundo == 1
+                                            ? Colors.white
+                                            : Colors.black),
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.height *.05,
+                                width: MediaQuery.of(context).size.height * .05,
                               ),
                               DropdownButton<String>(
-                                dropdownColor: corFundo == 1 ? Colors.black : corFundo == 0 ? Colors.white : Colors.black,
-                                focusColor: corFundo == 1 ? Colors.black : corFundo == 0 ? Colors.white : Colors.black,
+                                dropdownColor: corFundo == 1
+                                    ? Colors.black
+                                    : corFundo == 0
+                                        ? Colors.white
+                                        : Colors.black,
+                                focusColor: corFundo == 1
+                                    ? Colors.black
+                                    : corFundo == 0
+                                        ? Colors.white
+                                        : Colors.black,
                                 value: langCode,
-                                style: TextStyle(color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black),
-                                iconEnabledColor: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black,
-                                items: languages!
-                                    .map<DropdownMenuItem<String>>((String? value) {
+                                style: TextStyle(
+                                    color: corFundo == 0
+                                        ? Colors.black
+                                        : corFundo == 1
+                                            ? Colors.white
+                                            : Colors.black),
+                                iconEnabledColor: corFundo == 0
+                                    ? Colors.black
+                                    : corFundo == 1
+                                        ? Colors.white
+                                        : Colors.black,
+                                items: languages!.map<DropdownMenuItem<String>>(
+                                    (String? value) {
                                   return DropdownMenuItem<String>(
                                     value: value!,
                                     child: Text(
                                       value,
-                                      style: TextStyle(color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black),
+                                      style: TextStyle(
+                                          color: corFundo == 0
+                                              ? Colors.black
+                                              : corFundo == 1
+                                                  ? Colors.white
+                                                  : Colors.black),
                                     ),
                                   );
                                 }).toList(),
@@ -456,38 +510,70 @@ class _MyHomePageState extends State<MyHomePage> {
                                   });
                                 },
                               ),
-
                               SizedBox(
-                                width: MediaQuery.of(context).size.width *.04,
+                                width: MediaQuery.of(context).size.width * .04,
                               ),
-
                               Row(
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.height *.02),
+                                    margin: EdgeInsets.only(
+                                        left:
+                                            MediaQuery.of(context).size.height *
+                                                .02),
                                     child: Row(
                                       children: [
                                         Text(
                                           "Voz :",
-                                          style: TextStyle(fontSize: tamanhoFonte, color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black),
+                                          style: TextStyle(
+                                              fontSize: tamanhoFonte,
+                                              color: corFundo == 0
+                                                  ? Colors.black
+                                                  : corFundo == 1
+                                                      ? Colors.white
+                                                      : Colors.black),
                                         ),
                                         SizedBox(
-                                          width: MediaQuery.of(context).size.height *.05,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              .05,
                                         ),
                                         DropdownButton<String>(
-                                          dropdownColor: corFundo == 1 ? Colors.black : corFundo == 0 ? Colors.white : Colors.black,
-                                          focusColor: corFundo == 1 ? Colors.black : corFundo == 0 ? Colors.white : Colors.black,
+                                          dropdownColor: corFundo == 1
+                                              ? Colors.black
+                                              : corFundo == 0
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                          focusColor: corFundo == 1
+                                              ? Colors.black
+                                              : corFundo == 0
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                          value: name,
                                           style: TextStyle(
-                                              color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black
-                                          ),
-                                          iconEnabledColor: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black,
-                                          items: nomes!
-                                              .map<DropdownMenuItem<String>>((String? value) {
+                                              color: corFundo == 0
+                                                  ? Colors.black
+                                                  : corFundo == 1
+                                                      ? Colors.white
+                                                      : Colors.black),
+                                          iconEnabledColor: corFundo == 0
+                                              ? Colors.black
+                                              : corFundo == 1
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                          items: nomes
+                                              .map<DropdownMenuItem<String>>(
+                                                  (String? value) {
                                             return DropdownMenuItem<String>(
                                               value: value!,
                                               child: Text(
                                                 value,
-                                                style: TextStyle(color: corFundo == 0 ? Colors.black : corFundo == 1 ? Colors.white : Colors.black),
+                                                style: TextStyle(
+                                                    color: corFundo == 0
+                                                        ? Colors.black
+                                                        : corFundo == 1
+                                                            ? Colors.white
+                                                            : Colors.black),
                                               ),
                                             );
                                           }).toList(),
@@ -503,9 +589,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ],
                               ),
-
                               SizedBox(
-                                width: MediaQuery.of(context).size.width *.3,
+                                width: MediaQuery.of(context).size.width * .3,
                               ),
                             ],
                           ),
@@ -537,28 +622,28 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _aumentarFonte() async {
-    setState((){
+    setState(() {
       tamanhoFonte = tamanhoFonte + 1.0;
     });
     //print(tamanhoFonte);
   }
 
   void _fonteOriginal() async {
-    setState((){
+    setState(() {
       tamanhoFonte = 17.0;
     });
     //print(tamanhoFonte);
   }
 
   void _altoContraste() async {
-    setState((){
+    setState(() {
       corFonte = 0;
       corFundo = 1;
     });
   }
 
   void _contrasteOriginal() async {
-    setState((){
+    setState(() {
       corFonte = 1; //Preto
       corFundo = 0; //Branco
     });
